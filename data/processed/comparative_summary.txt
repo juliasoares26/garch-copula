@@ -1,0 +1,33 @@
+Período: 2020-01-01 00:00:00 até 2026-05-08 05:00:00
+
+=== AÇÕES BRASILEIRAS ===
+Quantidade: 23
+Retorno médio anualizado : 1.45%
+Volatilidade média anual  : 17.85%
+Sharpe ratio médio        : -0.636
+Séries estacionárias      : 23/23
+
+Top 5 por retorno anualizado:
+  PETR4.SA           6.50%
+  CMIG4.SA           4.89%
+  WEGE3.SA           4.22%
+  VALE3.SA           3.87%
+  TAEE11.SA          3.86%
+
+Top 5 por Sharpe ratio:
+  ^VIX             -0.140
+  PETR4.SA         -0.169
+  CMIG4.SA         -0.306
+  WEGE3.SA         -0.318
+  GGBR4.SA         -0.354
+
+=== ÍNDICES / BENCHMARKS ===
+Quantidade: 4
+Retorno médio anualizado : 2.60%
+Volatilidade média anual  : 12.39%
+Sharpe ratio médio        : -0.615
+
+  ^BVSP           | Retorno:    1.73% | Vol:  12.09% | Sharpe: -0.687
+  EWZ             | Retorno:    0.79% | Vol:  18.19% | Sharpe: -0.508
+  GLD             | Retorno:    4.33% | Vol:   9.05% | Sharpe: -0.631
+  SPY             | Retorno:    3.57% | Vol:  10.21% | Sharpe: -0.633
