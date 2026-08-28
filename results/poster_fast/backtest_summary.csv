@@ -1,0 +1,6 @@
+estrategia,annual_return,annual_vol,sharpe,sortino,max_drawdown,calmar,hist_var_99,hist_es_99,kupiec_p_99,cc_p_99,var_adequate_99,avg_turnover,n_obs
+Minimum Variance,0.0411,0.1755,-0.3874,-0.5163,-0.671047,0.0613,0.030347,0.048755,0.0,0.0,False,0.005147,5135
+Maximum Decorrelation,0.0279,0.209,-0.3887,-0.5156,-0.704343,0.0396,0.035177,0.05769,0.0,0.0,False,0.005463,5135
+Equal Weight,0.013,0.2461,-0.3906,-0.5255,-0.633252,0.0206,0.040351,0.063905,0.0,0.0,False,0.000284,5135
+Maximum Diversification,0.0315,0.1967,-0.3947,-0.5236,-0.697281,0.0452,0.034017,0.054877,0.0,0.0,False,0.00542,5135
+Risk Parity,0.0213,0.2225,-0.3948,-0.5279,-0.630968,0.0337,0.037542,0.059816,0.0,0.0,False,0.001284,5135

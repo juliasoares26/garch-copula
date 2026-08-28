@@ -1,0 +1,25 @@
+\begin{table}[htbp]
+  \centering
+  \caption{Métricas de performance OOS — janela=252d, rebal=21d, cov=ledoit_wolf.}
+  \label{tab:comparison_performance}
+  \footnotesize
+  \begin{tabular}{lrrrrrrrrrrrrrr}
+  \toprule
+  Estratégia & Ret. a.a. (\%) & Vol. a.a. (\%) & Sharpe & Sortino & Max DD (\%) & Calmar & Omega & VaR 99\% (\%) & ES 99\% (\%) & Turnover & SSPW & Skew & Ex. Kurt. & $T$ \\
+  \midrule
+  Equal Weight & 1.3000 & 24.6100 & -0.3906 & -0.5255 & -63.3300 & 0.0206 & 0.9528 & 4.0400 & 6.3900 & 0.0003 & 0.0216 & -0.6274 & 12.0478 & 5135.0000 \\
+  Risk Parity & 2.1300 & 22.2500 & -0.3948 & -0.5279 & -63.1000 & 0.0337 & 0.9492 & 3.7500 & 5.9800 & 0.0013 & 0.0251 & -0.7421 & 14.4411 & 5135.0000 \\
+  Maximum Diversification & 3.1500 & 19.6700 & -0.3947 & -0.5236 & -69.7300 & 0.0452 & 0.9459 & 3.4000 & 5.4900 & 0.0054 & 0.0819 & -1.0146 & 17.7009 & 5135.0000 \\
+  Minimum Variance & 4.1100 & 17.5500 & -0.3874 & -0.5163 & -67.1000 & 0.0613 & 0.9456 & 3.0300 & 4.8800 & 0.0051 & 0.1121 & -0.8507 & 12.5867 & 5135.0000 \\
+  Maximum Decorrelation & 2.7900 & 20.9000 & -0.3887 & -0.5156 & -70.4300 & 0.0396 & 0.9484 & 3.5200 & 5.7700 & 0.0055 & 0.0764 & -1.0443 & 18.4574 & 5135.0000 \\
+  \bottomrule
+  \midrule
+  \multicolumn{15}{l}{\textit{Bootstrap IC 95\% (Sharpe)}}
+  \\
+  Equal Weight & \multicolumn{2}{c}{--} \\
+  Risk Parity & \multicolumn{2}{c}{--} \\
+  Maximum Diversification & \multicolumn{2}{c}{--} \\
+  Minimum Variance & \multicolumn{2}{c}{--} \\
+  Maximum Decorrelation & \multicolumn{2}{c}{--} \\
+  \end{tabular}
+\end{table}

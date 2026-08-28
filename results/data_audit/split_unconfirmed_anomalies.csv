@@ -1,0 +1,10 @@
+ticker,date,pre_price_raw,post_price_raw,raw_logret,stability_check,reason
+CVCB3,2020-03-16,15.35,10.4,-0.3893,0.2017,not persistent / possible data error or genuine one-off market move
+CVCB3,2020-03-18,9.95,6.49,-0.4273,0.1712,not persistent / possible data error or genuine one-off market move
+ENEV3,2014-12-10,0.71,0.47,-0.4125,2.9426,not persistent / possible data error or genuine one-off market move
+HAPV3,2023-03-09,2.92,1.94,-0.4089,0.2053,not persistent / possible data error or genuine one-off market move
+IRBR3,2020-03-04,28.0,19.05,-0.3851,0.189,not persistent / possible data error or genuine one-off market move
+JBSS3,2017-05-22,8.71,5.98,-0.3761,0.1618,not persistent / possible data error or genuine one-off market move
+PCAR3,2017-05-05,72.5,128.7,0.5739,0.243,not persistent / possible data error or genuine one-off market move
+UGPA3,2011-08-05,50.08,20.01,-0.9174,0.2527,not persistent / possible data error or genuine one-off market move
+VIVA3,2020-03-18,15.75,10.72,-0.3847,0.2526,not persistent / possible data error or genuine one-off market move

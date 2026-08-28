@@ -1,0 +1,72 @@
+﻿python : INFO:numexpr.utils:NumExpr defaulting to 4 threads.
+No linha:1 caractere:1
++ python debug_joe.py 2>&1 | Out-File -FilePath debug_log.txt -Encoding ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (INFO:numexpr.ut...g to 4 threads.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+DEBUG:matplotlib:matplotlib data path: C:\Users\julia\AppData\Local\Programs\Python\Python311\Lib\site-packages\matplotlib\mpl-data
+DEBUG:matplotlib:CONFIGDIR=C:\Users\julia\.matplotlib
+DEBUG:matplotlib:interactive is False
+DEBUG:matplotlib:platform is win32
+DEBUG:matplotlib:CACHEDIR=C:\Users\julia\.matplotlib
+DEBUG:matplotlib.font_manager:Using fontManager instance from C:\Users\julia\.matplotlib\fontlist-v390.json
+INFO:src.data.data_loader:carregado IBRX50     (IBrX-50                  )  2020-01-02 \u2192 2026-04-29  (1575 obs)
+INFO:src.data.data_loader:shape: (1575, 1)  NaN antes: 0
+INFO:src.data.data_loader:load_data: 1 ticker(s) do universo carregados
+INFO:src.data.data_loader:carregado ^BVSP      (Ibovespa                 )  2020-01-02 \u2192 2026-04-29  (1575 obs)
+INFO:src.data.data_loader:carregado EWZ        (iShares MSCI Brazil      )  2020-01-02 \u2192 2026-04-29  (1589 obs)
+INFO:src.data.data_loader:carregado GLD        (SPDR Gold Shares         )  2020-01-02 \u2192 2026-04-29  (1589 obs)
+INFO:src.data.data_loader:carregado SPY        (SPDR S&P 500 ETF         )  2020-01-02 \u2192 2026-04-29  (1589 obs)
+INFO:src.data.data_loader:shape: (1629, 4)  NaN antes: 174
+INFO:src.data.data_loader:load_benchmarks: 4 benchmark(s) carregados
+INFO:src.marginals.garch:fit_from_loader: 5 ativos  2020-01-03 \u2192 2026-04-29
+INFO:src.marginals.garch:GARCHFitter.fit_all  modelo=gjr  dist=t  ativos=['IBRX50', '^BVSP', 'EWZ', 'GLD', 'SPY']
+INFO:src.marginals.garch:IBRX50: _fit_arch  mtype=gjr  vol=GARCH  o=1  dist=t
+INFO:src.marginals.garch:IBRX50: LB(10) p=0.044 < 0.05 ù tentando GJR(1,2)
+INFO:src.marginals.garch:IBRX50: _fit_arch  mtype=gjr  vol=GARCH  o=1  dist=t
+INFO:src.marginals.garch:IBRX50            GJR-GARCH(1,2)    \u03b1=0.0298 \u03b3=0.0661 \u03b2=0.9167 persist=0.9795  AIC=4873.44  
+converged=True
+INFO:src.marginals.garch:IBRX50: GJR-GARCH(1,2) nÒo melhorou AIC (4873.44 >= 4871.44), mantendo original
+INFO:src.marginals.garch:IBRX50            GJR-GARCH(1,1)    \u03b1=0.0298 \u03b3=0.0661 \u03b2=0.9167 persist=0.9795  AIC=4871.44  
+converged=True
+INFO:src.marginals.garch:^BVSP: _fit_arch  mtype=gjr  vol=GARCH  o=1  dist=t
+INFO:src.marginals.garch:^BVSP             GJR-GARCH(1,1)    \u03b1=0.0208 \u03b3=0.0624 \u03b2=0.9266 persist=0.9786  AIC=5137.83  
+converged=True
+INFO:src.marginals.garch:EWZ: _fit_arch  mtype=gjr  vol=GARCH  o=1  dist=t
+INFO:src.marginals.garch:EWZ: LB(10) p=0.001 < 0.05 ù tentando GJR(1,2)
+INFO:src.marginals.garch:EWZ: _fit_arch  mtype=gjr  vol=GARCH  o=1  dist=t
+INFO:src.marginals.garch:EWZ               GJR-GARCH(1,2)    \u03b1=0.0171 \u03b3=0.0577 \u03b2=0.8820 persist=0.9280  AIC=6621.75  
+converged=True
+INFO:src.marginals.garch:EWZ: GJR-GARCH(1,2) nÒo melhorou AIC (6621.75 >= 6619.77), mantendo original
+INFO:src.marginals.garch:EWZ               GJR-GARCH(1,1)    \u03b1=0.0165 \u03b3=0.0555 \u03b2=0.9333 persist=0.9775  AIC=6619.77  
+converged=True
+INFO:src.marginals.garch:GLD: _fit_arch  mtype=gjr  vol=GARCH  o=1  dist=t
+INFO:src.marginals.garch:GLD               GJR-GARCH(1,1)    \u03b1=0.0909 \u03b3=0.0000 \u03b2=0.8649 persist=0.9557  AIC=4592.24  
+converged=True
+INFO:src.marginals.garch:SPY: _fit_arch  mtype=gjr  vol=GARCH  o=1  dist=t
+INFO:src.marginals.garch:SPY               GJR-GARCH(1,1)    \u03b1=0.0000 \u03b3=0.2471 \u03b2=0.8494 persist=0.9730  AIC=4472.25  
+converged=True
+INFO:src.marginals.garch:Ajuste concluÝdo: 5/5 ativos.
+INFO:vine_copulas:Ajustando R-vine 5d  arvores=3  min_tau=0.0  forced_edges=[(1, 4), (3, 4)]
+DEBUG:vine_copulas:  fam=frank           \u03c4=0.098  \u03bbL emp=0.275 mod=0.000  \u03bbU emp=0.245 mod=0.000  tree=1
+DEBUG:vine_copulas:  fam=frank           \u03c4=0.098  \u03bbL emp=0.275 mod=0.000  \u03bbU emp=0.245 mod=0.000  tree=1
+DEBUG:vine_copulas:  fam=frank           \u03c4=0.278  \u03bbL emp=0.393 mod=0.000  \u03bbU emp=0.310 mod=0.000  tree=1
+DEBUG:vine_copulas:  fam=frank           \u03c4=0.278  \u03bbL emp=0.393 mod=0.000  \u03bbU emp=0.310 mod=0.000  tree=1
+DEBUG:vine_copulas:  fam=t               \u03c4=0.925  \u03bbL emp=0.952 mod=0.842  \u03bbU emp=0.930 mod=0.842  tree=1
+DEBUG:vine_copulas:  fam=t               \u03c4=0.925  \u03bbL emp=0.952 mod=0.842  \u03bbU emp=0.930 mod=0.842  tree=1
+DEBUG:vine_copulas:  fam=bb1             \u03c4=0.708  \u03bbL emp=0.747 mod=0.965  \u03bbU emp=0.672 mod=0.667  tree=1
+DEBUG:vine_copulas:  fam=bb1             \u03c4=0.708  \u03bbL emp=0.747 mod=0.965  \u03bbU emp=0.672 mod=0.667  tree=1
+DEBUG:vine_copulas:  fam=t               \u03c4=0.107  \u03bbL emp=0.485 mod=0.000  \u03bbU emp=0.458 mod=0.000  tree=2
+DEBUG:vine_copulas:  fam=joe_180         \u03c4=0.107  \u03bbL emp=0.196 mod=0.226  \u03bbU emp=0.194 mod=0.000  tree=2
+DEBUG:vine_copulas:  fam=frank           \u03c4=0.072  \u03bbL emp=0.225 mod=0.000  \u03bbU emp=0.145 mod=0.000  tree=2
+DEBUG:vine_copulas:  fam=frank           \u03c4=0.072  \u03bbL emp=0.210 mod=0.000  \u03bbU emp=0.147 mod=0.000  tree=2
+DEBUG:vine_copulas:  fam=frank           \u03c4=0.002  \u03bbL emp=0.094 mod=0.000  \u03bbU emp=0.075 mod=0.000  tree=2
+DEBUG:vine_copulas:  fam=frank           \u03c4=0.002  \u03bbL emp=0.222 mod=0.000  \u03bbU emp=0.194 mod=0.000  tree=2
+DEBUG:vine_copulas:  fam=frank           \u03c4=0.015  \u03bbL emp=0.167 mod=0.000  \u03bbU emp=0.228 mod=0.000  tree=3
+DEBUG:vine_copulas:  fam=frank           \u03c4=0.015  \u03bbL emp=0.159 mod=0.000  \u03bbU emp=0.221 mod=0.000  tree=3
+DEBUG:vine_copulas:  fam=joe             \u03c4=0.080  \u03bbL emp=0.170 mod=0.000  \u03bbU emp=0.190 mod=0.175  tree=3
+DEBUG:vine_copulas:  fam=t               \u03c4=0.080  \u03bbL emp=0.421 mod=0.000  \u03bbU emp=0.450 mod=0.000  tree=3
+INFO:vine_copulas:R-vine OK  sim_order=[1, 4, 0, 2, 3]
+Ativos: ['IBRX50', '^BVSP', 'EWZ', 'GLD', 'SPY']
+LL: 15886.230016716285 AIC: -31748.46003343257 sim_order: [1, 4, 0, 2, 3]

@@ -1,0 +1,2 @@
+,annual_return,annual_vol,sharpe,sortino,max_drawdown,calmar,omega,hist_var_99,hist_es_99,avg_turnover,sspw,skewness,excess_kurtosis,n_obs
+Equal Weight,0.013,0.2461,-0.3906,-0.5255,-0.6333,0.0206,0.9528,0.0404,0.0639,0.0003,0.021616,-0.6274,12.0478,5135.0

@@ -1,0 +1,6 @@
+,sharpe,sharpe_arith_lo,sharpe_arith_hi,sortino,sortino_arith_lo,sortino_arith_hi
+Equal Weight,-0.3906,-0.659,0.1602,-0.5255,-0.9053,0.2367
+Risk Parity,-0.3948,-0.6774,0.1794,-0.5279,-0.8887,0.2238
+Maximum Diversification,-0.3947,-0.7832,0.2072,-0.5236,-0.95,0.2617
+Minimum Variance,-0.3874,-0.7246,0.191,-0.5163,-1.0146,0.3099
+Maximum Decorrelation,-0.3887,-0.7326,0.2092,-0.5156,-0.9953,0.3278

@@ -1,0 +1,6 @@
+,Equal Weight,Risk Parity,Maximum Diversification,Minimum Variance,Maximum Decorrelation
+Equal Weight,1.0,0.5571,0.7707,0.7743,0.8585
+Risk Parity,0.5571,1.0,0.8678,0.8487,0.9881
+Maximum Diversification,0.7707,0.8678,1.0,0.9359,0.6595
+Minimum Variance,0.7743,0.8487,0.9359,1.0,0.8454
+Maximum Decorrelation,0.8585,0.9881,0.6595,0.8454,1.0

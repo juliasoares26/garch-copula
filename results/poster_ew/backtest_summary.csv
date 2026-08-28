@@ -1,0 +1,2 @@
+estrategia,annual_return,annual_vol,sharpe,sortino,max_drawdown,calmar,hist_var_99,hist_es_99,kupiec_p_99,cc_p_99,var_adequate_99,avg_turnover,n_obs
+Equal Weight,0.013,0.2461,-0.3906,-0.5255,-0.633252,0.0206,0.040351,0.063905,0.0,0.0,False,0.000284,5135

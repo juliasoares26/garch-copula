@@ -1,0 +1,53 @@
+name: copula-evt-portfolio
+channels:
+  - conda-forge
+  - pytorch
+  - defaults
+
+dependencies:
+  - python=3.11
+  - pip
+
+  # Científico / numérico
+  - numpy>=1.24
+  - pandas>=2.0
+  - scipy>=1.11
+  - pyarrow>=14.0
+
+  # Econometria / séries temporais
+  - statsmodels>=0.14
+
+  # Visualização
+  - matplotlib>=3.7
+  - seaborn>=0.13
+
+  # Jupyter
+  - jupyterlab>=4.0
+  - ipywidgets>=8.1
+
+  # PyTorch (CPU; trocar por pytorch-cuda=12.1 para GPU)
+  - pytorch>=2.1
+  - cpuonly
+
+  - pip:
+      # GARCH
+      - arch>=6.2
+      # ML / scikit
+      - scikit-learn>=1.3
+      # Paralelismo
+      - joblib>=1.3
+      - numba>=0.58
+      # Dados B3
+      - yfinance>=0.2
+      - pandas-datareader>=0.10
+      # Otimização
+      - cvxpy>=1.4
+      # Plotly (opcional, notebooks)
+      - plotly>=5.17
+      # Testes
+      - pytest>=7.4
+      - pytest-cov>=4.1
+
+variables:
+  PYTHONDONTWRITEBYTECODE: "1"
+  PYTHONUNBUFFERED: "1"

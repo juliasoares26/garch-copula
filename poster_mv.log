@@ -1,0 +1,83 @@
+2026-08-27 15:38:04,206  __main__  INFO  ============================================================
+2026-08-27 15:38:04,206  __main__  INFO    ESTUDO COMPARATIVO DE PORTFÓLIOS B3
+2026-08-27 15:38:04,206  __main__  INFO    Universo: 81 ações do IBrX-50 (data/raw_b3_ibrx50/), universo dinâmico point-in-time
+2026-08-27 15:38:04,206  __main__  INFO  ============================================================
+2026-08-27 15:38:04,207  __main__  INFO  Carregando universo de ações (Economatica): /mnt/data/opt/package/data/raw_b3_ibrx50
+2026-08-27 15:38:17,253  __main__  INFO    81 ativos carregados. Correções de split aplicadas: 119 eventos em 53 tickers. Candidatos não confirmados (não corrigidos): 9.
+2026-08-27 15:38:17,260  __main__  INFO    Retornos: (5387, 81)  (2004-11-19 → 2026-08-17)
+2026-08-27 15:38:17,261  __main__  INFO    Cobertura média por ativo: 66.2% (esperado <100%: universo não-balanceado por desenho)
+2026-08-27 15:38:17,592  __main__  INFO    Selic: 10.9134% a.a. (média da taxa anualizada, 2004-11-19 a 2026-08-17, 5387 obs) [fonte: /mnt/data/opt/package/data/raw/Selic_252d.xlsx]
+2026-08-27 15:38:18,068  backtest_rolling  INFO  
+RollingBacktestRunner — 1 estratégias  T=5387  d=81  window=252  rebal=21
+2026-08-27 15:38:18,069  backtest_rolling  INFO  
+── Executando backtest: Equal Weight ──
+2026-08-27 15:38:18,069  backtest_rolling  INFO  WalkForward [Equal Weight]  T=5387  window=rolling  est_window=252  rebal_freq=21  n_rebal=245
+2026-08-27 15:38:18,586  backtest_rolling  INFO  VaR Backtest [Equal Weight 95%] 95%: violations=232/3980 (5.83%) | Kupiec p=0.019 | CC p=0.000 | adequate=✗
+2026-08-27 15:38:18,589  backtest_rolling  INFO  VaR Backtest [Equal Weight 99%] 99%: violations=81/3980 (2.04%) | Kupiec p=0.000 | CC p=0.000 | adequate=✗
+2026-08-27 15:38:18,596  backtest_rolling  INFO  
+Backtests concluídos: ['ew']
+2026-08-27 15:38:18,596  __main__  INFO    Benchmark (Equal Weight portfolio): 5135 obs
+2026-08-27 15:38:18,599  __main__  INFO  
+============================================================
+2026-08-27 15:38:18,599  __main__  INFO    BACKTEST ROLLING — ESTRATÉGIAS RISK-BASED
+2026-08-27 15:38:18,599  __main__  INFO  ============================================================
+2026-08-27 15:38:18,599  __main__  INFO    Estratégias   : ['mv']
+2026-08-27 15:38:18,599  __main__  INFO    Janela estim. : 252 dias
+2026-08-27 15:38:18,599  __main__  INFO    Rebalanceamento: 21 dias
+2026-08-27 15:38:18,599  __main__  INFO    Tipo janela   : rolling
+2026-08-27 15:38:18,599  __main__  INFO    Max weight    : 35%
+2026-08-27 15:38:18,599  __main__  INFO    Cov estimator : ledoit_wolf
+2026-08-27 15:38:18,599  __main__  INFO    Risk fn       : historical
+2026-08-27 15:38:18,599  __main__  INFO  ============================================================
+2026-08-27 15:38:18,599  backtest_rolling  INFO  
+RollingBacktestRunner — 1 estratégias  T=5387  d=81  window=252  rebal=21
+2026-08-27 15:38:18,599  backtest_rolling  INFO  
+── Executando backtest: Minimum Variance ──
+2026-08-27 15:38:18,599  backtest_rolling  INFO  WalkForward [Minimum Variance]  T=5387  window=rolling  est_window=252  rebal_freq=21  n_rebal=245
+2026-08-27 15:38:18,845  risk_based_portfolios  INFO  MV: vol=0.1647  DR=1.873  converged=True
+2026-08-27 15:38:19,031  risk_based_portfolios  INFO  MV: vol=0.1696  DR=1.853  converged=True
+2026-08-27 15:38:19,224  risk_based_portfolios  INFO  MV: vol=0.1775  DR=1.784  converged=True
+2026-08-27 15:38:19,409  risk_based_portfolios  INFO  MV: vol=0.1728  DR=1.831  converged=True
+2026-08-27 15:38:19,638  risk_based_portfolios  INFO  MV: vol=0.1697  DR=1.877  converged=True
+2026-08-27 15:38:19,832  risk_based_portfolios  INFO  MV: vol=0.1629  DR=1.921  converged=True
+2026-08-27 15:38:20,015  risk_based_portfolios  INFO  MV: vol=0.1700  DR=1.903  converged=True
+2026-08-27 15:38:20,292  risk_based_portfolios  INFO  MV: vol=0.1840  DR=1.836  converged=True
+2026-08-27 15:38:20,660  risk_based_portfolios  INFO  MV: vol=0.1917  DR=1.766  converged=True
+2026-08-27 15:38:21,051  risk_based_portfolios  INFO  MV: vol=0.1914  DR=1.770  converged=True
+2026-08-27 15:38:21,357  risk_based_portfolios  INFO  MV: vol=0.1932  DR=1.754  converged=True
+2026-08-27 15:38:21,776  risk_based_portfolios  INFO  MV: vol=0.1868  DR=1.765  converged=True
+2026-08-27 15:38:22,259  risk_based_portfolios  INFO  MV: vol=0.1843  DR=1.760  converged=True
+2026-08-27 15:38:22,684  risk_based_portfolios  INFO  MV: vol=0.1807  DR=1.767  converged=True
+2026-08-27 15:38:23,097  risk_based_portfolios  INFO  MV: vol=0.1789  DR=1.754  converged=True
+2026-08-27 15:38:23,403  risk_based_portfolios  INFO  MV: vol=0.1793  DR=1.739  converged=True
+2026-08-27 15:38:23,756  risk_based_portfolios  INFO  MV: vol=0.1812  DR=1.720  converged=True
+2026-08-27 15:38:24,068  risk_based_portfolios  INFO  MV: vol=0.1790  DR=1.708  converged=True
+2026-08-27 15:38:24,473  risk_based_portfolios  INFO  MV: vol=0.1701  DR=1.714  converged=True
+2026-08-27 15:38:24,847  risk_based_portfolios  INFO  MV: vol=0.1524  DR=1.790  converged=True
+2026-08-27 15:38:25,176  risk_based_portfolios  INFO  MV: vol=0.1497  DR=1.854  converged=True
+2026-08-27 15:38:25,586  risk_based_portfolios  INFO  MV: vol=0.1748  DR=1.739  converged=True
+2026-08-27 15:38:26,061  risk_based_portfolios  INFO  MV: vol=0.1755  DR=1.761  converged=True
+2026-08-27 15:38:26,404  risk_based_portfolios  INFO  MV: vol=0.1795  DR=1.744  converged=True
+2026-08-27 15:38:26,889  risk_based_portfolios  INFO  MV: vol=0.1895  DR=1.712  converged=True
+2026-08-27 15:38:27,298  risk_based_portfolios  INFO  MV: vol=0.1979  DR=1.688  converged=True
+2026-08-27 15:38:27,744  risk_based_portfolios  INFO  MV: vol=0.2111  DR=1.656  converged=True
+2026-08-27 15:38:28,174  risk_based_portfolios  INFO  MV: vol=0.2074  DR=1.687  converged=True
+2026-08-27 15:38:28,661  risk_based_portfolios  INFO  MV: vol=0.2125  DR=1.679  converged=True
+2026-08-27 15:38:29,090  risk_based_portfolios  INFO  MV: vol=0.2169  DR=1.692  converged=True
+2026-08-27 15:38:29,584  risk_based_portfolios  INFO  MV: vol=0.2082  DR=1.814  converged=True
+2026-08-27 15:38:30,249  risk_based_portfolios  INFO  MV: vol=0.2189  DR=1.878  converged=True
+2026-08-27 15:38:30,805  risk_based_portfolios  INFO  MV: vol=0.2184  DR=1.908  converged=True
+2026-08-27 15:38:31,381  risk_based_portfolios  INFO  MV: vol=0.2055  DR=1.923  converged=True
+2026-08-27 15:38:31,870  risk_based_portfolios  INFO  MV: vol=0.2665  DR=1.654  converged=True
+2026-08-27 15:38:32,289  risk_based_portfolios  INFO  MV: vol=0.3086  DR=1.527  converged=True
+2026-08-27 15:38:32,764  risk_based_portfolios  INFO  MV: vol=0.3031  DR=1.569  converged=True
+2026-08-27 15:38:33,201  risk_based_portfolios  INFO  MV: vol=0.3114  DR=1.553  converged=True
+2026-08-27 15:38:33,662  risk_based_portfolios  INFO  MV: vol=0.3029  DR=1.583  converged=True
+2026-08-27 15:38:34,161  risk_based_portfolios  INFO  MV: vol=0.3020  DR=1.583  converged=True
+2026-08-27 15:38:34,596  risk_based_portfolios  INFO  MV: vol=0.2991  DR=1.632  converged=True
+2026-08-27 15:38:35,170  risk_based_portfolios  INFO  MV: vol=0.2988  DR=1.619  converged=True
+2026-08-27 15:38:35,888  risk_based_portfolios  INFO  MV: vol=0.3010  DR=1.616  converged=True
+2026-08-27 15:38:36,555  risk_based_portfolios  INFO  MV: vol=0.2951  DR=1.607  converged=True
+2026-08-27 15:38:36,994  risk_based_portfolios  INFO  MV: vol=0.2919  DR=1.621  converged=True
+2026-08-27 15:38:37,544  risk_based_portfolios  INFO  MV: vol=0.2867  DR=1.641  converged=True
+2026-08-27 15:38:38,044  risk_based_portfolios  INFO  MV: vol=0.2252  DR=1.800  converged=True

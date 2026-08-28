@@ -1,0 +1,17 @@
+\begin{table}[htbp]
+  \centering
+  \caption{Métricas de performance OOS — janela=252d, rebal=21d, cov=ledoit_wolf.}
+  \label{tab:comparison_performance}
+  \footnotesize
+  \begin{tabular}{lrrrrrrrrrrrrrr}
+  \toprule
+  Estratégia & Ret. a.a. (\%) & Vol. a.a. (\%) & Sharpe & Sortino & Max DD (\%) & Calmar & Omega & VaR 99\% (\%) & ES 99\% (\%) & Turnover & SSPW & Skew & Ex. Kurt. & $T$ \\
+  \midrule
+  Equal Weight & 1.3000 & 24.6100 & -0.3906 & -0.5255 & -63.3300 & 0.0206 & 0.9528 & 4.0400 & 6.3900 & 0.0003 & 0.0216 & -0.6274 & 12.0478 & 5135.0000 \\
+  \bottomrule
+  \midrule
+  \multicolumn{15}{l}{\textit{Bootstrap IC 95\% (Sharpe)}}
+  \\
+  Equal Weight & \multicolumn{2}{c}{--} \\
+  \end{tabular}
+\end{table}
