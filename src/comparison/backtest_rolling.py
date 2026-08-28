@@ -396,6 +396,7 @@ class WalkForwardBacktest:
             except Exception as e:
                 logger.warning(f"  t={t_idx}: optimizer falhou ({e}), mantendo pesos")
 
+<<<<<<< HEAD
             # O forecast de risco é constante durante todo o bloco OOS até o
             # próximo rebalanceamento: depende apenas da janela de estimação e
             # dos pesos recém-calculados. Calculá-lo uma vez evita repetir o
@@ -409,6 +410,8 @@ class WalkForwardBacktest:
                 except Exception as e:
                     logger.debug(f"  risk_fn falhou no rebalanceamento t={t_idx}: {e}")
 
+=======
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
             t_oos_end = min(t_idx + self.rebalancing_frequency, T)
             oos_df    = returns_df.iloc[t_idx:t_oos_end]
 
@@ -416,6 +419,18 @@ class WalkForwardBacktest:
                 date  = oos_df.index[t_oos]
                 ret_t = nan_safe_portfolio_return(oos_df.iloc[t_oos].values, w_current)
 
+<<<<<<< HEAD
+=======
+                risk_metrics = {"var_95": np.nan, "var_99": np.nan,
+                                "es_95": np.nan,  "es_99": np.nan}
+                if self.risk_fn is not None:
+                    try:
+                        w_for_risk = pd.Series(w_current, index=asset_names).reindex(train_df.columns).values
+                        risk_metrics = self.risk_fn(train_df, w_for_risk)
+                    except Exception as e:
+                        logger.debug(f"  risk_fn falhou em {date}: {e}")
+
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
                 period = PeriodResult(
                     date=date,
                     weights=w_current.copy(),
@@ -893,6 +908,7 @@ class RollingBacktestRunner:
 
         self._backtest_results = {}
 
+<<<<<<< HEAD
         # As estratégias são independentes. Executá-las em processos separados
         # evita repetir o custo total do walk-forward sequencialmente. A
         # metodologia, janelas e funções objetivo permanecem inalteradas.
@@ -930,6 +946,14 @@ class RollingBacktestRunner:
                     self._backtest_results[strategy] = res
                 except Exception as exc:
                     logger.error(f"Backtest '{strategy}' falhou: {exc}")
+=======
+        for strategy in self.strategies:
+            try:
+                res = self._run_strategy(strategy, returns_df, benchmark_returns)
+                self._backtest_results[strategy] = res
+            except Exception as exc:
+                logger.error(f"Backtest '{strategy}' falhou: {exc}")
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
 
         if cvar_result is not None:
             self._backtest_results["cvar_evt"] = cvar_result

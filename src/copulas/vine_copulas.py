@@ -56,6 +56,7 @@ _N_PARAMS_VINE = {
 
 
 # Seleciona família pelo mBICV (Nagler et al., 2019 — eq. 7).
+<<<<<<< HEAD
 def _select_best_copula(u, v, families, tail_bias=None,
                         aic_threshold=None, tail_err_tol=None,
                         tail_q=0.05, vine_tree=1):
@@ -67,10 +68,22 @@ def _select_best_copula(u, v, families, tail_bias=None,
     """
     scores = {}; cops = {}
     n_obs = len(u)
+=======
+def _select_best_copula(u, v, families, tail_bias='None',
+                        aic_threshold=4.0,
+                        tail_err_tol=0.15,
+                        tail_q=0.10,
+                        vine_tree=1):
+    scores = {}; cops = {}
+    n_obs = len(u)
+    tau_emp = abs(float(kendalltau(u, v)[0]))
+
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
     for fam in families:
         try:
             cop = PairCopula(fam)
             cop.fit(u, v)
+<<<<<<< HEAD
             ll = cop.loglikelihood(u, v)
             if not np.isfinite(ll):
                 continue
@@ -93,6 +106,90 @@ def _select_best_copula(u, v, families, tail_bias=None,
 
 def _fit_one_pair(u, v, families, tail_bias, aic_threshold, min_tau,
                   tail_err_tol=0.12, tail_q=0.05, vine_tree=1):
+=======
+            ll  = cop.loglikelihood(u, v)
+            if not np.isfinite(ll):
+                continue
+            k   = _N_PARAMS_VINE.get(fam, 1)
+            scores[fam] = _compute_mbicv(ll, n_obs, k, vine_tree)
+            cops[fam]   = cop
+        except Exception:
+            pass
+    if not scores:
+        bc = PairCopula('gaussian'); bc.param = 0.0
+        return 'gaussian', bc
+
+    best_fam = min(scores, key=scores.__getitem__)
+
+    if 't' in scores:
+        lam_L_pre, lam_U_pre = _empirical_tail(u, v, q=tail_q)
+        both_tails  = lam_L_pre > tail_q and lam_U_pre > tail_q
+        symmetric   = abs(lam_L_pre - lam_U_pre) < 0.20
+        strong_tail = max(lam_L_pre, lam_U_pre) > tail_q + 0.05
+        if both_tails and symmetric and strong_tail:
+            best_fam = 't'
+        elif strong_tail and tau_emp > 0.15 and (scores['t'] - scores[best_fam]) < aic_threshold:
+            best_fam = 't'
+
+    if best_fam == 't' and 'bb1' in scores:
+        lam_L_t, lam_U_t = cops['t'].tail_dependence()
+        lam_L_chk, lam_U_chk = _empirical_tail(u, v, q=tail_q)
+        underest_L = lam_L_chk - lam_L_t
+        if underest_L > 0.15 and tau_emp < 0.85:
+            bb1_score = scores['bb1']
+            t_score   = scores['t']
+            if bb1_score - t_score < aic_threshold * 2:
+                best_fam = 'bb1'
+
+    if tail_bias is not None and tail_bias not in ('None', 'symmetric'):
+        OPPOSITE_PAIRS = [('gumbel', 'gumbel_180'), ('clayton_180', 'clayton')]
+        for (upper_fam, lower_fam) in OPPOSITE_PAIRS:
+            if upper_fam not in scores or lower_fam not in scores:
+                continue
+            if abs(scores[upper_fam] - scores[lower_fam]) >= aic_threshold:
+                continue
+            winner = upper_fam if tail_bias == 'upper' else (lower_fam if tail_bias == 'lower' else None)
+            if winner and best_fam in (upper_fam, lower_fam):
+                best_fam = winner
+
+    if tau_emp < 0.50:
+        lam_L_emp, lam_U_emp = _empirical_tail(u, v, q=tail_q)
+        best_cop = cops[best_fam]
+        lam_L_mod, lam_U_mod = best_cop.tail_dependence()
+        err_L = lam_L_mod - lam_L_emp
+        err_U = lam_U_mod - lam_U_emp
+
+        if err_L > tail_err_tol or err_U > tail_err_tol:
+            rotation = _ROTATION_MAP.get(best_fam)
+            used_rotation = False
+            if rotation is not None and rotation in cops:
+                rot_cop = cops[rotation]
+                lam_L_rot, lam_U_rot = rot_cop.tail_dependence()
+                if (lam_L_rot - lam_L_emp) <= tail_err_tol and (lam_U_rot - lam_U_emp) <= tail_err_tol:
+                    best_fam = rotation
+                    used_rotation = True
+            if not used_rotation:
+                fallback = next((fb for fb in ('frank', 'gaussian') if fb in cops), None)
+                if fallback is None:
+                    fb_cop = PairCopula('gaussian'); fb_cop.param = 0.0
+                    cops['gaussian'] = fb_cop; fallback = 'gaussian'
+                best_fam = fallback
+
+    _logger = logging.getLogger(__name__)
+    best_cop_final = cops[best_fam]
+    lam_L_f, lam_U_f = best_cop_final.tail_dependence()
+    lam_L_e, lam_U_e = _empirical_tail(u, v, q=tail_q)
+    _logger.debug(
+        f"  fam={best_fam:14s}  τ={tau_emp:.3f}  "
+        f"λL emp={lam_L_e:.3f} mod={lam_L_f:.3f}  "
+        f"λU emp={lam_U_e:.3f} mod={lam_U_f:.3f}  tree={vine_tree}"
+    )
+    return best_fam, best_cop_final
+
+
+def _fit_one_pair(u, v, families, tail_bias, aic_threshold, min_tau,
+                  tail_err_tol=0.12, tail_q=0.10, vine_tree=1):
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
     tau = abs(float(kendalltau(u, v)[0]))
     if tau < min_tau:
         cop = PairCopula('gaussian'); cop.param = 0.0
@@ -662,8 +759,13 @@ class CVineCopula:
         self.n_trees_fit = None; self._pair_data = {}
 
     def fit(self, data, families=None, auto_select=True, order_method='dissmann',
+<<<<<<< HEAD
             max_trees=3, min_tau=0.0, tail_bias=None, aic_threshold=None,
             tail_err_tol=None, tail_q=0.05, n_jobs=-1):
+=======
+            max_trees=3, min_tau=0.0, tail_bias=None, aic_threshold=10.0,
+            tail_err_tol=0.12, tail_q=0.10, n_jobs=-1):
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
         if families is None:
             families = ['gaussian','clayton','gumbel','frank','t','gumbel_180','clayton_180','joe','joe_180','bb1','bb1_180']
         n_trees = min(max_trees, self.n_dim-1) if max_trees else self.n_dim-1

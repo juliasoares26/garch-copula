@@ -158,14 +158,19 @@ def compute_ew_benchmark(returns: pd.DataFrame, args: argparse.Namespace) -> pd.
     return bm
 
 
+<<<<<<< HEAD
 # Lê a Selic anualizada do arquivo Economatica Selic_252d.xlsx.
 # O campo Fechamento do arquivo já representa a taxa anualizada em
 # pontos percentuais (por exemplo, 10.85 = 10.85% a.a.). Portanto,
 # a conversão correta é Fechamento / 100 e a média no período.
+=======
+# Lê a taxa Selic do xlsx do Economatica (Selic_252d.xlsx).
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
 def load_selic(
     args: argparse.Namespace,
     returns_index: Optional[pd.DatetimeIndex] = None,
 ) -> float:
+<<<<<<< HEAD
     requested_dir = getattr(args, "data_dir", None)
     candidates = []
     if requested_dir:
@@ -224,6 +229,35 @@ def load_selic(
         f"[fonte: {path}]"
     )
     return rf
+=======
+    data_dir = Path(getattr(args, "data_dir", None) or DATA_RAW)
+    path = data_dir / "Selic_252d.xlsx"
+    try:
+        s = _read_economatica_xlsx(str(path), "Selic")
+        if s.max() > 1:
+            s = s / 100.0
+
+        if returns_index is not None:
+            s_period = s.reindex(returns_index).ffill().dropna()
+            if s_period.empty:
+                raise ValueError(
+                    "Selic sem sobreposição com o período de retornos "
+                    f"({returns_index.min()} a {returns_index.max()})."
+                )
+        else:
+            s_period = s
+
+        rf = float(s_period.mean())
+        logger.info(
+            f"  Selic: {rf:.4%} a.a. "
+            f"(média diária, {s_period.index.min().date()} a "
+            f"{s_period.index.max().date()}, {len(s_period)} obs)"
+        )
+        return rf
+    except Exception as e:
+        logger.warning(f"  Selic não carregada ({e}). Usando 10.75% a.a.")
+        return 0.1075
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
 
 
 # 2. Estratégias risk-based (backtest rolling)
@@ -663,6 +697,7 @@ def _garch_fit_single_asset(args_tuple):
 
     try:
         from marginals.garch import GARCHFitter
+<<<<<<< HEAD
         # O walk-forward usa seleção adaptativa quando model_type="auto" e
         # skewed-t como distribuição das inovações.
         fitter = GARCHFitter(model_type=model_type, dist="skewt")
@@ -670,6 +705,14 @@ def _garch_fit_single_asset(args_tuple):
         std_res = _np.asarray(gres.std_residuals)
         sigma_t1 = float(gres.conditional_vol.iloc[-1])
         params = None
+=======
+        fitter = GARCHFitter(model_type=model_type, dist="normal")
+        kw = {"starting_values": starting_values} if starting_values is not None else {}
+        gres     = fitter.fit_single(ret, ticker=ticker, **kw)
+        std_res  = _np.asarray(gres.std_residuals)
+        sigma_t1 = float(gres.conditional_vol.iloc[-1])
+        params   = _np.asarray(gres.params)
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
     except Exception as exc:
         std_res  = ret.values / (ret.std(ddof=1) or 1.0)
         sigma_t1 = float(ret.std(ddof=1))
@@ -680,7 +723,11 @@ def _garch_fit_single_asset(args_tuple):
 # Fábrica de optimizer_fn + risk_fn compatíveis com WalkForwardBacktest.
 def make_copula_cvar_optimizer(
     pipeline,
+<<<<<<< HEAD
     garch_model: str = "auto",
+=======
+    garch_model: str = "gjr",
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
     copula_type: str = "cvine",
     n_sim: int       = 5_000,
     seed: int        = 42,
@@ -692,8 +739,11 @@ def make_copula_cvar_optimizer(
     from scipy.stats import rankdata as _rankdata, norm as _norm
 
     _n_workers = min(5, max(1, (os.cpu_count() or 2) - 1), 4)
+<<<<<<< HEAD
     # O artigo fixa um teto de 5.000 cenários Monte Carlo por janela.
     n_sim_effective = min(max(int(n_sim), 1), 5_000)
+=======
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
 
     _state = {
         "window_counter":          0,
@@ -717,7 +767,11 @@ def make_copula_cvar_optimizer(
         for _ in range(3):
             w0 = np.random.dirichlet(np.ones(d))
             res = _minimize(lambda w: float(w @ cov @ w), w0,
+<<<<<<< HEAD
                             method="SLSQP", bounds=[(0.0, 0.35)] * d,
+=======
+                            method="SLSQP", bounds=[(0.0, 1.0)] * d,
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
                             constraints=cons, options={"ftol": 1e-12, "maxiter": 1000})
             if res.success and res.fun < best_var:
                 best_var, best_w = res.fun, res.x.copy()
@@ -780,6 +834,7 @@ def make_copula_cvar_optimizer(
                 families    = ["gaussian", "t", "clayton", "clayton_180",
                                "gumbel", "gumbel_180", "frank"],
                 auto_select = True,
+<<<<<<< HEAD
                 max_trees   = min(int(pipeline.max_trees), 3),
                 min_tau     = max(float(pipeline.min_tau), 0.05),
                 tail_bias   = None,
@@ -808,6 +863,23 @@ def make_copula_cvar_optimizer(
                 sim_returns[:, tickers.index(tkr)] = marginal.ppf(u_sim[:, tickers.index(tkr)])
 
             _state["last_marginals"] = marginals
+=======
+                max_trees   = pipeline.max_trees,
+                min_tau     = pipeline.min_tau,
+                n_jobs      = 1,
+            )
+
+            u_sim = cop.simulate(n_samples=n_sim, seed=win_seed)
+            u_sim = np.clip(u_sim, 1e-10, 1 - 1e-10)
+
+            sim_returns = np.zeros((n_sim, d))
+            ret_arr     = train_df.values
+            for i, tkr in enumerate(tickers):
+                raw_q        = np.quantile(ret_arr[:, i], u_sim[:, i])
+                sigma_uncond = float(np.std(ret_arr[:, i], ddof=1)) or 1.0
+                sigma_cond   = sigma_t_map.get(tkr, sigma_uncond)
+                sim_returns[:, i] = raw_q * (sigma_cond / sigma_uncond)
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
 
             _state["last_sim_returns"] = sim_returns
 
@@ -820,6 +892,7 @@ def make_copula_cvar_optimizer(
 
             best_w, best_cvar = np.ones(d) / d, np.inf
             cons = [{"type": "eq", "fun": lambda w: w.sum() - 1}]
+<<<<<<< HEAD
             # O artigo descreve cinco restarts: o primeiro em equal-weight
             # e os quatro seguintes inicializados por Dirichlet.
             bnds = [(0.0, 0.35)] * d
@@ -827,6 +900,11 @@ def make_copula_cvar_optimizer(
             for restart in range(n_restarts_eff):
                 w0 = (np.ones(d) / d if restart == 0
                       else np.random.dirichlet(np.ones(d)))
+=======
+            bnds = [(0.0, 1.0)] * d
+            for _ in range(n_restarts):
+                w0  = np.random.dirichlet(np.ones(d))
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
                 res = _minimize(_cvar, w0, method="SLSQP",
                                 bounds=bnds, constraints=cons,
                                 options={"ftol": 1e-10, "maxiter": 500})
@@ -910,7 +988,11 @@ def build_pipeline_backtest(
             pipeline    = pipeline,
             garch_model = args.garch_model,
             copula_type = args.copula,
+<<<<<<< HEAD
             n_sim       = min(max(args.n_sim, 1), 5_000),
+=======
+            n_sim       = min(args.n_sim, 5_000),
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
             seed        = args.seed,
             n_restarts  = args.n_restarts,
         )
@@ -1050,8 +1132,13 @@ def parse_args() -> argparse.Namespace:
                       help="Diretório com os xlsx do Economatica "
                            "(IBRX50, IBOV, EWZ, GLD, SPY, Selic_252d). "
                            "Default: data/raw/ relativo à raiz do projeto.")
+<<<<<<< HEAD
     data.add_argument("--risk-free",  default=None, type=float,
                       help="Taxa Selic anualizada. Se omitida, carrega Selic_252d.xlsx automaticamente.")
+=======
+    data.add_argument("--risk-free",  default=0.1075, type=float,
+                      help="Taxa Selic anualizada (sobrescrita por Selic_252d.xlsx se disponível)")
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
     data.add_argument("--fx-file", default=None, type=str,
                       help="Caminho do xlsx (formato Economatica) com o câmbio "
                            "USD/BRL, usado para converter EWZ/GLD/SPY (cotados "
@@ -1074,7 +1161,11 @@ def parse_args() -> argparse.Namespace:
                     help="Frequência de rebalanceamento (dias úteis)")
     bt.add_argument("--window-type", default="rolling",
                     choices=["rolling", "expanding"])
+<<<<<<< HEAD
     bt.add_argument("--max-weight",  default=0.35,  type=float,
+=======
+    bt.add_argument("--max-weight",  default=1.0,  type=float,
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
                     help="Peso máximo por ativo. Default=1.0 (sem restrição) — "
                          "adequado para universos pequenos (d=5).")
     bt.add_argument("--min-weight",  default=0.0,  type=float)
@@ -1094,7 +1185,11 @@ def parse_args() -> argparse.Namespace:
                       choices=["cvine", "dvine", "rvine", "dcc", "factor"])
     pipe.add_argument("--n-sim",      default=10_000, type=int)
     pipe.add_argument("--seed",       default=42, type=int)
+<<<<<<< HEAD
     pipe.add_argument("--garch-model", default="auto",
+=======
+    pipe.add_argument("--garch-model", default="gjr",
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
                       choices=["garch", "gjr", "auto"])
     pipe.add_argument("--pit-method", default="empirical",
                       choices=["empirical", "normal"])
@@ -1140,7 +1235,11 @@ def main() -> None:
 
     returns  = load_returns(args)
 
+<<<<<<< HEAD
     if args.risk_free is None:
+=======
+    if args.risk_free == 0.1075:
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
         args.risk_free = load_selic(args, returns_index=returns.index)
 
     benchmark = compute_ew_benchmark(returns, args)

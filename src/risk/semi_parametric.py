@@ -8,10 +8,14 @@ import pandas as pd
 import numpy as np
 from typing import Optional, Dict, Tuple
 import logging
+<<<<<<< HEAD
 try:
   from arch import arch_model
 except ImportError:
   arch_model = None
+=======
+from arch import arch_model
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
 import warnings
 from scipy import stats
 import matplotlib.pyplot as plt
@@ -71,8 +75,13 @@ class SemiParametricGARCH_EVT:
     garch_q: int = 1,
     dist: str = 'skewt',
     threshold_method: str = 'quantile',
+<<<<<<< HEAD
     left_quantile: float = 0.05,
     right_quantile: float = 0.95,
+=======
+    left_quantile: float = 0.10,
+    right_quantile: float = 0.90,
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
     run_diagnostics: bool = True,
     plot_diagnostics: bool = False,
 ) -> Dict:
@@ -135,6 +144,7 @@ class SemiParametricGARCH_EVT:
     
     return self.get_summary()
 
+<<<<<<< HEAD
   def initialize_from_garch_result(self, returns: pd.Series, garch_result,
                                    left_quantile: float = 0.05,
                                    right_quantile: float = 0.95,
@@ -166,6 +176,8 @@ class SemiParametricGARCH_EVT:
     self.fitted = True
     return self
 
+=======
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
   # Calcula a Cumulative Distribution Function para um valor x usando o modelo semi-paramét…
   def cdf(self, x: float) -> float:
     if not self._fitted:
@@ -322,8 +334,11 @@ class SemiParametricGARCH_EVT:
                 (self.right_quantile - self.left_quantile) * empirical_cdf)
                 
   def _fit_garch(self, returns: pd.Series, spec: str, p: int, q: int, dist: str):
+<<<<<<< HEAD
     if arch_model is None:
       raise ImportError("pacote arch indisponível")
+=======
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
     try:
       if spec.upper() == 'GARCH':
         vol = 'GARCH'

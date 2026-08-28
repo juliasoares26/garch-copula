@@ -239,6 +239,7 @@ class _GJRGARCH11:
         )
 
 
+<<<<<<< HEAD
 class _OwnGARCHGeneric:
     """Fallback próprio para as cinco especificações da seleção adaptativa.
 
@@ -367,6 +368,8 @@ class _OwnGARCHGeneric:
         )
 
 
+=======
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
 # GARCHFitter  –  interface principal
 
 # Ajusta modelos GARCH para todos os ativos de um portfólio.
@@ -405,9 +408,13 @@ class GARCHFitter:
 
         r_pct = series.values * (100.0 if self.returns_are_decimal else 1.0)
 
+<<<<<<< HEAD
         if self.model_type == "auto":
             result = self._auto_select(series, ticker)
         elif ARCH_AVAILABLE:
+=======
+        if ARCH_AVAILABLE:
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
             result = self._fit_arch(r_pct, ticker, index)
         else:
             result = self._fit_own(r_pct, ticker, index)
@@ -417,7 +424,10 @@ class GARCHFitter:
 
         if (
             ARCH_AVAILABLE
+<<<<<<< HEAD
             and self.model_type != "auto"
+=======
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
             and self.run_diagnostics
             and result.ljung_box_p is not None
             and result.ljung_box_p < 0.05
@@ -549,7 +559,11 @@ class GARCHFitter:
             logger.warning(f"{ticker}: arch indisponivel no worker — usando fallback.")
             return self._fit_own(r_pct, ticker, index)
 
+<<<<<<< HEAD
         mtype = self.model_type
+=======
+        mtype = self.model_type if self.model_type != "auto" else "gjr"
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
 
         vol_map     = {"garch": "GARCH", "gjr": "GARCH", "egarch": "EGARCH"}
         label_map   = {"garch": "GARCH", "gjr": "GJR-GARCH", "egarch": "EGARCH"}
@@ -623,6 +637,7 @@ class GARCHFitter:
             )
             return self._fit_own(r_pct, ticker, index)
 
+<<<<<<< HEAD
     # Implementação própria (fallback) – distribuição Normal.
     def _fit_own(
         self, r_pct: np.ndarray, ticker: str, index: pd.Index
@@ -640,11 +655,28 @@ class GARCHFitter:
             own = _OwnGARCHGeneric("GARCH", 1, 1, 0)
         own.fit(r_dec)
         return own.get_result(ticker, index, r_dec)
+=======
+    # Implementação própria (fallback) – distribução Normal.
+    def _fit_own(
+        self, r_pct: np.ndarray, ticker: str, index: pd.Index
+    ) -> GARCHResult:
+        mtype = self.model_type
+        r_dec = r_pct / 100.0
+
+        if mtype in ("gjr", "auto", "egarch"):
+            g: Union[_GJRGARCH11, _GARCH11] = _GJRGARCH11()
+        else:
+            g = _GARCH11()
+
+        g.fit(r_dec)
+        return g.get_result(ticker, index, r_dec)
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
 
     # Internos – seleção automática
 
     # Compara GARCH e GJR-GARCH pelo AIC e retorna o melhor.
     def _auto_select(self, series: pd.Series, ticker: str) -> GARCHResult:
+<<<<<<< HEAD
         """Seleciona entre as cinco especificações por BIC + Ljung--Box.
 
         O BIC é penalizado pelos lags significativos (p < 0.05) do
@@ -702,6 +734,25 @@ class GARCHFitter:
             raise RuntimeError(f"Nenhuma das cinco especificações GARCH convergiu para {ticker}.")
         if self.run_diagnostics:
             self._add_diagnostics(best)
+=======
+        r_garch = GARCHFitter(
+            model_type="garch", dist=self.dist,
+            run_diagnostics=False,
+            returns_are_decimal=self.returns_are_decimal,
+        ).fit_single(series, ticker)
+
+        r_gjr = GARCHFitter(
+            model_type="gjr", dist=self.dist,
+            run_diagnostics=False,
+            returns_are_decimal=self.returns_are_decimal,
+        ).fit_single(series, ticker)
+
+        best = r_garch if r_garch.aic <= r_gjr.aic else r_gjr
+        logger.info(
+            f"{ticker}: auto-select → {best.model_type}  "
+            f"(GARCH AIC={r_garch.aic:.2f}  GJR AIC={r_gjr.aic:.2f})"
+        )
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
         return best
 
     # Internos – diagnósticos

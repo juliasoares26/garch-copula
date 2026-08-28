@@ -121,6 +121,7 @@ class _BaseOptimizer:
             constraints += extra_constraints
         bounds = self._bounds(d)
 
+<<<<<<< HEAD
         # Os restarts são independentes. Executá-los em paralelo reduz o
         # tempo total sem alterar a função objetivo, restrições, inicializações
         # ou critérios de aceitação.
@@ -132,6 +133,16 @@ class _BaseOptimizer:
             w0 = rng.dirichlet(np.ones(d)) if trial > 0 else np.ones(d) / d
             w0 = np.clip(w0, self.min_weight, self.max_weight)
             w0 /= w0.sum()
+=======
+        best_w, best_val = np.ones(d) / d, np.inf
+        succeeded = False
+
+        for trial in range(self.n_restarts):
+            w0 = self._rng.dirichlet(np.ones(d)) if trial > 0 else np.ones(d) / d
+            w0 = np.clip(w0, self.min_weight, self.max_weight)
+            w0 /= w0.sum()
+
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
             try:
                 res = minimize(
                     objective, w0, method="SLSQP",
@@ -139,6 +150,7 @@ class _BaseOptimizer:
                     constraints=constraints,
                     options={"ftol": 1e-10, "maxiter": 1000},
                 )
+<<<<<<< HEAD
                 return trial, res
             except Exception as exc:
                 logger.debug(f"  restart {trial}: {exc}")
@@ -156,6 +168,14 @@ class _BaseOptimizer:
                     best_val = res.fun
                     best_w = res.x.copy()
                     succeeded = True
+=======
+                if res.success and res.fun < best_val:
+                    best_val = res.fun
+                    best_w   = res.x.copy()
+                    succeeded = True
+            except Exception as exc:
+                logger.debug(f"  restart {trial}: {exc}")
+>>>>>>> 02db07f20ba2b71150198fc1697bb6ffc88ca4a4
 
         best_w = np.clip(best_w, 0, 1)
         if best_w.sum() > 1e-8:
